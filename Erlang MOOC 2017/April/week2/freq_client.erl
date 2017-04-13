@@ -2,7 +2,7 @@
 % In order to see trace output, compile using c(freq_client,{d,debug}).
 % *****************************************************************************
 -module(freq_client).
--export([request_frequency/0, drop_frequency/1]).
+-export([request_frequency/0, drop_frequency/1, free_frequencies/0, inject/1]).
 
 % Length of time the client will wait for a server response (in ms)
 -define(TIMEOUT, 500).
@@ -33,6 +33,18 @@ request_frequency() ->
 drop_frequency(F) ->
   ?TRACE("Deallocating frequency " ++ make_str(F)),
   send_to_server({deallocate, F}).
+
+% -----------------------------------------------------------------------------
+% Ask the server which frequencies it currently has free
+free_frequencies() ->
+  ?TRACE("Asking server what frequencies it currently has free"),
+  send_to_server(free_freqs).
+
+% -----------------------------------------------------------------------------
+% Inject a new set of frequencies into the server
+inject(Freqs) ->
+  ?TRACE("Injecting new frequencies into the server"),
+  send_to_server({inject,Freqs}).
 
 
 % *****************************************************************************
@@ -89,12 +101,14 @@ listen_to_server() ->
           % Nope.  This message is good and will be the response to either an
           % alloc or dealloc command
           case Cmd of
-            error   -> io:fwrite("Error: " ++ make_str(F) ++ "~n");
-            alloc   -> io:fwrite("Client " ++ make_str(self()) ++
-                                 " is allocated frequency " ++ make_str(F) ++ "~n"),
-                       F;
-            dealloc -> io:fwrite("Frequency " ++ make_str(F) ++
-                                 " deallocated from client " ++ make_str(self()) ++ "~n")
+            error      -> io:fwrite("Error: " ++ make_str(F) ++ "~n");
+            alloc      -> io:fwrite("Client " ++ make_str(self()) ++
+                                    " is allocated frequency " ++ make_str(F) ++ "~n"),
+                          F;
+            dealloc    -> io:fwrite("Frequency " ++ make_str(F) ++
+                                    " deallocated from client " ++ make_str(self()) ++ "~n");
+            free_freqs -> io:fwrite("Free frequencies are ~w~n",[F]);
+            inject     -> io:fwrite("Frequencies injected~n")
           end
       end
 

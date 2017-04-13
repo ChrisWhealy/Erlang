@@ -2,10 +2,7 @@
 % In order to see trace output, compile using c(freq_server,{d,debug}).
 % *****************************************************************************
 -module(freq_server).
--export([start/0, stop/0, init/0]).
-
-% Hard-coded list of frequencies
--define(FREQUENCY_LIST, [10,11,12,13,14,15]).
+-export([start/0, stop/0, init/0, loop/1]).
 
 % Delay (in ms) to simulate server load
 -define(SERVER_DELAY, 200).
@@ -33,7 +30,7 @@
 % The server must also listen for client termination
 init() ->
   process_flag(trap_exit, true),
-  loop({?FREQUENCY_LIST, []}).
+  freq_server:loop({get_frequencies(), []}).
 
 % -----------------------------------------------------------------------------
 % Start server.
@@ -63,6 +60,14 @@ stop() ->
 % *****************************************************************************
 % Private API
 % *****************************************************************************
+
+% -----------------------------------------------------------------------------
+% Provide a hard-coded list of frequencies
+%get_frequencies() -> [10,11,12,13,14,15].
+get_frequencies() -> [10].
+
+% -----------------------------------------------------------------------------
+% Empty the mailbox ignoring all messages except for a stop command
 flush_mailbox() ->
   receive
     {reply, ExecTime, stopped} ->
@@ -77,6 +82,8 @@ flush_mailbox() ->
     done
   end.
 
+% -----------------------------------------------------------------------------
+% Create strings from various Erlang data types
 make_str(X) when is_tuple(X)   orelse
                  is_pid(X)     orelse
                  is_integer(X) orelse
@@ -124,6 +131,14 @@ deallocate({Free, Allocated}, Freq) ->
       {{Free, Allocated}, {error, not_your_frequency}}
 
   end.
+
+% -----------------------------------------------------------------------------
+% Inject new frequencies
+inject({Free, Allocated}, Freqs) ->
+  % Merge the new frequencies into the list of free frequencies removing and
+  % duplicates
+  NewFree = lists:sort(sets:to_list(sets:from_list(lists:merge(Free, Freqs)))),
+  {{NewFree, Allocated}, {inject, ok}}.
 
 % -----------------------------------------------------------------------------
 % Handle frequency deallocation due to client process termination
@@ -192,7 +207,7 @@ loop(Frequencies) ->
     % Trap client exit signal
     {'EXIT', ClientPid, _Reason} ->
       ?TRACE("Client process " ++ pid_to_list(ClientPid) ++ " died with reason " ++ make_str(_Reason)),
-      loop(exited(Frequencies, ClientPid));
+      freq_server:loop(exited(Frequencies, ClientPid));
 
     % Stop the server
     {request, ClientPid, TS, stop} ->
@@ -209,8 +224,10 @@ loop(Frequencies) ->
       % This will be either an allocate or deallocate command
       {NewFrequencies, Reply} =
         case Cmd of
+          free_freqs         -> {Frequencies, {free_freqs, element(1, Frequencies)}};
           allocate           -> allocate(Frequencies, TS, ClientPid);
-          {deallocate, Freq} -> deallocate(Frequencies, Freq)
+          {deallocate, Freq} -> deallocate(Frequencies, Freq);
+          {inject, Freqs}    -> inject(Frequencies, Freqs)
         end,
 
       % All replies sent to the client are a three tuple containing:
@@ -218,12 +235,12 @@ loop(Frequencies) ->
       % - The time taken for the server to respond (in 𝛍s)
       % - The reply message, which itself could be either an atom or a two tuple
       ClientPid ! {reply, timer:now_diff(os:timestamp(), TS), Reply},
-      loop(NewFrequencies)
+      freq_server:loop(NewFrequencies)
   
   % Periodically check for frequencies whose leases have expired then restart
   % the receive loop
   after ?LEASE_EXPIRY div 2 ->
     ?TRACE("Checking for expired leases"),
-    loop(expire_leases(Frequencies))
+    freq_server:loop(expire_leases(Frequencies))
 
   end.
