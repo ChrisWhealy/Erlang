@@ -35,7 +35,8 @@ init() ->
 %
 % *****************************************************************************
 start_server(Restart) ->
-  ServerPid = spawn(freq_server, start, []),
+  freq_server:start(),
+  ServerPid = whereis(freq_server),
   ServerRef = monitor(process, ServerPid),
   {ServerPid, ServerRef, Restart}.
 
