@@ -162,7 +162,7 @@ child_minder(ServerList, RoundRobin) ->
     % -------------------------------------------------------------------------
     % Add a new frequency server
     {add, FreqList} ->
-      ?TRACE("Adding new frequency server~n"),
+      ?TRACE("Adding new frequency server"),
       % Find next unused server id
       ServerId = element(1,lists:max(ServerList)) + 1,
       NewServerList = [start_server(ServerId,FreqList,0) | ServerList],
