@@ -3,7 +3,7 @@
 % *****************************************************************************
 -module(freq_client).
 
--export([request_frequency/0, drop_frequency/1, free_frequencies/0]).
+-export([request_frequency/0, drop_frequency/0]).
 
 -include("utils.hrl").
 -include("trace.hrl").
@@ -19,20 +19,14 @@
 % The client requests a frequency
 request_frequency() ->
   ?TRACE("Requesting a frequency"),
-  put(alloc_info, send_to_server(allocate)).
+  put(alloc_info, send_to_supervisor(allocate)).
 
 % -----------------------------------------------------------------------------
 % The client no longer needs its allocated frequency
-drop_frequency(F) ->
-  ?TRACE("Deallocating frequency " ++ make_str(F)),
+drop_frequency() ->
   {Freq,ServerId} = get(alloc_info),
-  send_to_server({deallocate, Freq, ServerId}).
-
-% -----------------------------------------------------------------------------
-% Ask the server which frequencies it currently has free
-free_frequencies() ->
-  ?TRACE("Asking what frequencies are currently free"),
-  send_to_server(free_freqs).
+  ?TRACE("Deallocating frequency " ++ make_str(Freq)),
+  send_to_supervisor({deallocate, Freq, ServerId}).
 
 
 
@@ -55,7 +49,7 @@ is_msg_stale(T) -> (?TIMEOUT * 1000) - T =< 0.
 % - The timestamp of when the client sent the request (needed for deciding
 %   whether or not the server responded in time)
 % - The request payload
-send_to_server(Payload) ->
+send_to_supervisor(Payload) ->
   ?TRACE("Sending " ++ make_str(Payload) ++ " to supervisor"),
   freq_supervisor ! {request, self(), os:timestamp(), Payload},
   listen_to_server().
@@ -84,12 +78,13 @@ listen_to_server() ->
         _ ->
           % Nope.  This message is good and will be the response to either an
           % alloc or dealloc command
+          FreqStr = "Frequency " ++ make_str(Freq),
+
           case Cmd of
-            error      -> io:fwrite("Error: " ++ make_str(Freq) ++ "~n");
-            alloc      -> io:fwrite("Frequency " ++ make_str(Freq) ++
-                                    " allocated by server " ++ make_str(ServerId) ++ "~n");
-            dealloc    -> io:fwrite("Frequency " ++ make_str(Freq) ++ " deallocated~n");
-            free_freqs -> io:fwrite("Free frequencies are ~w~n",[Freq])
+            error   -> io:fwrite("Error: " ++ make_str(Freq) ++ "~n");
+            alloc   -> io:fwrite(FreqStr ++ " allocated by server " ++ make_str(ServerId) ++ "~n"),
+                       {Freq, ServerId};
+            dealloc -> io:fwrite(FreqStr ++ " deallocated~n")
           end
       end
 

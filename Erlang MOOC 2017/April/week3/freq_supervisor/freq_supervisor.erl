@@ -107,14 +107,14 @@ write_server_details({ServerId, ServerPid, FreqList, RestartCount}) ->
 % -----------------------------------------------------------------------------
 % Handle server communication
 send_to_server({_, _, _, allocate} = ClientMsg, ServerList, RoundRobin) ->
-  ?TRACE("Sending " ++ make_str(ClientMsg) ++ " to server"),
-  {_, ServerPid, _, _} = lists:nth(RoundRobin, ServerList),
+  {ServerId, ServerPid, _, _} = lists:nth(RoundRobin, ServerList),
+  ?TRACE("Sending " ++ make_str(ClientMsg) ++ " to server " ++ make_str(ServerId)),
   ServerPid ! ClientMsg;
 
-send_to_server({_, _, _, {deallocate, _, ServerId}} = ClientMsg, ServerList, _) ->
-  ?TRACE("Sending " ++ make_str(ClientMsg) ++ " to server"),
+send_to_server({_, ClientPid, TS, {deallocate, Freq, ServerId}}, ServerList, _) ->
+  ?TRACE("Sending {deallocate," ++ make_str(Freq) ++ "} to server " ++ make_str(ServerId)),
   {ServerId, ServerPid, _, _} = lists:nth(ServerId, ServerList),
-  ServerPid ! ClientMsg.
+  ServerPid ! {request, ClientPid, TS, {deallocate, Freq}}.
 
 % -----------------------------------------------------------------------------
 % The child minder process receives a list servers to look after

@@ -235,7 +235,6 @@ loop(Frequencies) ->
           free_freqs         -> {Frequencies, {free_freqs, element(1, Frequencies), ServerId}}
          ;allocate           -> allocate(Frequencies, TS, ClientPid)
          ;{deallocate, Freq} -> deallocate(Frequencies, Freq)
-         ;{inject, Freqs}    -> inject(Frequencies, Freqs)
         end,
 
       % All replies sent to the client are a three tuple containing:
