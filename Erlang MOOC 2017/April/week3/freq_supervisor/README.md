@@ -1,4 +1,4 @@
-#Frequency Server with Supervisor
+# Frequency Server with Supervisor
 At the start of week 3, we added a supervisor process to act as middleware betwen the client and the frequency server.  The purpose of this supervisor is the following:
 
 1. To act as a load balancer for however many servers it administers.  In this case a simple round robin algorithm is used.
@@ -8,7 +8,7 @@ At the start of week 3, we added a supervisor process to act as middleware betwe
 
 The frequency client sends its request to the supervisor which in turn, sends that request to the next server.  The server then responds directly to the client, bypassing the supervisor.
 
-##Frequency Supervisor API
+## Frequency Supervisor API
 `start/0`  
 Starts the frequency supervisor.  By default, the supervisor will spawn two freqeuncy servers. If a frequency server crashes, by default, the supervisor will restart it no more than twice.
 
@@ -37,14 +37,14 @@ Frequency List : [20,21,22,23,24,25]
 Restart count  : 0
 ```
 
-##Frequency Client API
+## Frequency Client API
 `request_frequency/0`  
 Requests that a frequency be allocate to this client.  The server that answers this request is determined by the round robin algorithm in the supervisor.
 
-##Frequency Server API
+## Frequency Server API
 The frequency server's API is managed entirely by the supervisor.
 
-##Usage
+## Usage
 ```erlang
 1> c(freq_supervisor, {d, debug}).
 {ok,freq_supervisor}
