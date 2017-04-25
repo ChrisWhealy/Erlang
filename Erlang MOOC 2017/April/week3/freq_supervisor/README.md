@@ -25,7 +25,7 @@ Drops the frequency server identified the integer (server id) passed as an argum
 Prints a list of the currently active freqeuncy servers, similar to the following:
 
 ```erlang
----------------------------------+
++----------------------------------+
 Server Id      : 1
 Server Pid     : <0.81.0>
 Frequency List : [10,11,12,13,14,15]
