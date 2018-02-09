@@ -1,0 +1,18 @@
+Comments from Robert Virding on th edifference between throw, error and exit
+
+OK, I just want to inform you that I have not yet heard the course. :-) 
+So the idea behind the name 'throw' is that you are throwing a non-local return upto a surrounding 'catch'. This is why when you catch a throw you just see the value, it is not an error just a non-local return. 'catch' will also catch exits and errors but then you get an '{ERROR,Reason}' tuple so you can see that an exit/error has returned.
+
+Catch is the oldest way of locally catching throws/exits/errors. Back in those days there was only 'exit', no 'error', and you did not get a stacktrace. This is why 'catch' returns the 'EXIT' tuple. Then the machine started adding stacktraces for some cases but not others and finally 'error' was added which always gives a stacktrace.
+
+This is the difference between 'exit' and 'error'. Note that 'exit' was not changed. Later 'try ... catch ... end' was added with better control over what you catch and what you want to do with it. Which is why you have the 3 classes throw/exit/error. (I personally think the class:value syntax sucks as it has nothing to do with function calls :-))
+
+As I see it the main difference between 'exit' and 'error' is intent. When I use 'exit' I want to terminate the process with a specific reason, either 'normal' or anything else. I am not really generating an error. When I want to generate an ERROR I use 'error'. Again mainly intent. To see the difference try doing in the shell: 
+1> process_flag(trap_exit,true). 
+2> spawn_link(fun () -> exit(bert) end). 
+3> spawn_link(fun () -> error(bert) end). 
+4> flush().
+
+Last thing: 'throw' does not by default generate an error, it is only when you don't catch it you get an error, a 'nocatch' error. To see this try doing in the shell: 
+5> spawn_link(fun () -> throw(bert) end). 
+6> flush().
