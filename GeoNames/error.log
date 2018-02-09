@@ -1,0 +1,262 @@
+[07/Feb/2018:14:10:09 -0000] access to /icons/blank.gif failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/icons/blank.gif: File not found"
+[07/Feb/2018:14:10:09 -0000] access to /icons/back.gif failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/icons/back.gif: File not found"
+[07/Feb/2018:14:10:09 -0000] access to /icons/folder.gif failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/icons/folder.gif: File not found"
+[07/Feb/2018:14:10:09 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:14:11:24 -0000] access to /geodata:service failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/geodata:service: File not found"
+[07/Feb/2018:14:11:24 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:14:15:22 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:14:15:28 -0000] access to /erl/geodata:service failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/erl/geodata:service: File not found"
+[07/Feb/2018:14:15:28 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:14:16:18 -0000] access to /erl/geoserver:service failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/erl/geoserver:service: File not found"
+[07/Feb/2018:14:16:18 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:16:51 -0000] access to /erl/geoserver:service failed for 127.0.0.1, reason: 
+"mod_esi: Client not authorized to evaluate: geoserver:service"
+[07/Feb/2018:15:16:51 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:18:29 -0000] access to /erl/geoserver:service failed for 127.0.0.1, reason: 
+"mod_esi: Client not authorized to evaluate: geoserver:service"
+[07/Feb/2018:15:18:29 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:19:27 -0000] access to /erl/geoserver:service failed for 127.0.0.1, reason: 
+"mod_esi: Client not authorized to evaluate: geoserver:service"
+[07/Feb/2018:15:19:27 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:19:55 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't access ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:20:27 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:34:53 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:36:15 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  error
+   Error:       badarg
+   Stack trace: [{erlang,iolist_size,
+                     [[60,104,116,109,108,62,60,98,111,100,121,62,89,111,117,
+                       32,101,110,116,101,114,101,100,
+                       {server_software,"inets/6.3.6"},
+                       {server_name,"C02VR0DBHTDF"},
+                       {gateway_interface,"CGI/1.1"},
+                       {server_protocol,"HTTP/1.1"},
+                       {server_port,8080},
+                       {request_method,"GET"},
+                       {remote_addr,"127.0.0.1"},
+                       {peer_cert,undefined},
+                       {script_name,"/erl/geodata:service"},
+                       {http_host,"localhost:8080"},
+                       {http_connection,"keep-alive"},
+                       {http_cache_control,"max-age=0"},
+                       {http_accept,
+                           "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"},
+                       {http_accept_encoding,"gzip, deflate, br"},
+                       {http_accept_language,"en-US"},
+                       {http_upgrade_insecure_requests,"1"},
+                       {http_user_agent,
+                           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36"},
+                       60,98,114,62,60,47,98,111,100,121,62,60,47,104,116,109,
+                       108,62]],
+                     []},
+                 {http_chunk,encode,1,[{file,"http_chunk.erl"},{line,82}]},
+                 {httpd_response,send_chunk,3,
+                     [{file,"httpd_response.erl"},{line,249}]},
+                 {mod_esi,handle_body,6,[{file,"mod_esi.erl"},{line,467}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]}]
+[07/Feb/2018:15:36:15 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:37:05 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  error
+   Error:       badarg
+   Stack trace: [{erlang,iolist_size,
+                     [[60,104,116,109,108,62,60,98,111,100,121,62,89,111,117,
+                       32,101,110,116,101,114,101,100,
+                       {server_software,"inets/6.3.6"},
+                       {server_name,"C02VR0DBHTDF"},
+                       {gateway_interface,"CGI/1.1"},
+                       {server_protocol,"HTTP/1.1"},
+                       {server_port,8080},
+                       {request_method,"GET"},
+                       {remote_addr,"127.0.0.1"},
+                       {peer_cert,undefined},
+                       {script_name,"/erl/geodata:service"},
+                       {http_host,"localhost:8080"},
+                       {http_connection,"keep-alive"},
+                       {http_cache_control,"max-age=0"},
+                       {http_accept,
+                           "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"},
+                       {http_accept_encoding,"gzip, deflate, br"},
+                       {http_accept_language,"en-US"},
+                       {http_upgrade_insecure_requests,"1"},
+                       {http_user_agent,
+                           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36"},
+                       60,98,114,62,60,47,98,111,100,121,62,60,47,104,116,109,
+                       108,62]],
+                     []},
+                 {http_chunk,encode,1,[{file,"http_chunk.erl"},{line,82}]},
+                 {httpd_response,send_chunk,3,
+                     [{file,"httpd_response.erl"},{line,249}]},
+                 {mod_esi,handle_body,6,[{file,"mod_esi.erl"},{line,467}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]}]
+[07/Feb/2018:15:37:05 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:41:17 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:43:33 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:45:25 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  exit
+   Error:       {mod_esi_linked_process_died,<0.146.0>,normal}
+   Stack trace: [{mod_esi,receive_headers,1,[{file,"mod_esi.erl"},{line,452}]},
+                 {mod_esi,deliver_webpage_chunk,3,
+                     [{file,"mod_esi.erl"},{line,404}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]},
+                 {httpd_request_handler,handle_response,1,
+                     [{file,"httpd_request_handler.erl"},{line,558}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,601}]}]
+[07/Feb/2018:15:45:25 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:15:46:42 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  exit
+   Error:       {mod_esi_linked_process_died,<0.152.0>,normal}
+   Stack trace: [{mod_esi,receive_headers,1,[{file,"mod_esi.erl"},{line,452}]},
+                 {mod_esi,deliver_webpage_chunk,3,
+                     [{file,"mod_esi.erl"},{line,404}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]},
+                 {httpd_request_handler,handle_response,1,
+                     [{file,"httpd_request_handler.erl"},{line,558}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,601}]}]
+[07/Feb/2018:15:46:42 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:08:14 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:14:33 -0000] access to /erl/geodata:service?parm1=blah failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:14:33 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:16:19 -0000] access to /erl/geodata:service?parm1=blah failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:16:19 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:16:27 -0000] access to /erl/geodata:service failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:16:28 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:17:53 -0000] access to /erl/geodata:service failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:17:53 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:18:04 -0000] access to /erl/geodata:service failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:18:04 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:47:14 -0000] access to /erl/geodata:service?parm1=blah&parm2=foobar failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:16:47:14 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:48:07 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  exit
+   Error:       {mod_esi_linked_process_died,<0.232.0>,normal}
+   Stack trace: [{mod_esi,receive_headers,1,[{file,"mod_esi.erl"},{line,452}]},
+                 {mod_esi,deliver_webpage_chunk,3,
+                     [{file,"mod_esi.erl"},{line,404}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]},
+                 {httpd_request_handler,handle_response,1,
+                     [{file,"httpd_request_handler.erl"},{line,558}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,601}]}]
+[07/Feb/2018:16:48:07 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:16:57:45 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  exit
+   Error:       {mod_esi_linked_process_died,<0.240.0>,normal}
+   Stack trace: [{mod_esi,receive_headers,1,[{file,"mod_esi.erl"},{line,452}]},
+                 {mod_esi,deliver_webpage_chunk,3,
+                     [{file,"mod_esi.erl"},{line,404}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]},
+                 {httpd_request_handler,handle_response,1,
+                     [{file,"httpd_request_handler.erl"},{line,558}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,601}]}]
+[07/Feb/2018:16:57:45 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:17:09:27 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:17:36:08 -0000] access to /erl/geodata:service?parm1=blah&parm2=foobar failed for 127.0.0.1, reason: 
+"Not found"
+[07/Feb/2018:17:36:08 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:17:43:59 -0000], module traverse failed: mod_esi:do => 
+   Error Type:  exit
+   Error:       {mod_esi_linked_process_died,<0.304.0>,normal}
+   Stack trace: [{mod_esi,receive_headers,1,[{file,"mod_esi.erl"},{line,452}]},
+                 {mod_esi,deliver_webpage_chunk,3,
+                     [{file,"mod_esi.erl"},{line,404}]},
+                 {mod_esi,erl_scheme_webpage_chunk,5,
+                     [{file,"mod_esi.erl"},{line,394}]},
+                 {mod_esi,generate_webpage,7,
+                     [{file,"mod_esi.erl"},{line,323}]},
+                 {httpd_response,traverse_modules,2,
+                     [{file,"httpd_response.erl"},{line,73}]},
+                 {httpd_response,generate_and_send_response,1,
+                     [{file,"httpd_response.erl"},{line,41}]},
+                 {httpd_request_handler,handle_response,1,
+                     [{file,"httpd_request_handler.erl"},{line,558}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,601}]}]
+[07/Feb/2018:17:43:59 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"
+[07/Feb/2018:17:47:54 -0000] access to /favicon.ico failed for 127.0.0.1, reason: 
+"httpd_file: Can't open ./country_data/favicon.ico: File not found"

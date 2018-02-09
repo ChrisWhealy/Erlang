@@ -1,0 +1,15 @@
+{
+  "name": "Manawatu-Wanganui",
+  "cities": [
+    {
+      "cityName": "Waimiha",
+      "lat": -38.616667,
+      "lng": 175.316667
+    },
+    {
+      "cityName": "Wanganui",
+      "lat": -39.933333,
+      "lng": 175.05
+    }
+  ]
+}

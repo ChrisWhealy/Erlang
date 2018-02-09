@@ -1,0 +1,87 @@
+{
+  "name": "New Zealand [Aotearoa]",
+  "iso2": "nz",
+  "cities": null,
+  "regionList": [
+    {
+      "name": "Auckland",
+      "id": 0
+    },
+    {
+      "name": "Bay of Plenty",
+      "id": 1
+    },
+    {
+      "name": "Canterbury",
+      "id": 2
+    },
+    {
+      "name": "Gisborne",
+      "id": 3
+    },
+    {
+      "name": "Hawke's Bay",
+      "id": 4
+    },
+    {
+      "name": "Manawatu-Wanganui",
+      "id": 5
+    },
+    {
+      "name": "Marlborough",
+      "id": 6
+    },
+    {
+      "name": "Nelson",
+      "id": 7
+    },
+    {
+      "name": "Otago",
+      "id": 8
+    },
+    {
+      "name": "Southland",
+      "id": 9
+    },
+    {
+      "name": "Taranaki",
+      "id": 10
+    },
+    {
+      "name": "Unnamed region 01",
+      "id": 11
+    },
+    {
+      "name": "Unnamed region 02",
+      "id": 12
+    },
+    {
+      "name": "Waikato",
+      "id": 13
+    },
+    {
+      "name": "Wellington",
+      "id": 14
+    },
+    {
+      "name": "West Coast",
+      "id": 15
+    }
+  ],
+  "geoRectangle": {
+    "West": 165.996170044,
+    "East": 183.724152,
+    "North": -29.2410945892,
+    "South": -52.607585907
+  },
+  "capital": {
+    "DLST": 1,
+    "TD": 12,
+    "Flg": 2,
+    "Name": "Wellington",
+    "GeoPt": [
+      -41.28,
+      174.51
+    ]
+  }
+}
