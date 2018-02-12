@@ -7,6 +7,6 @@
   -define(TRACE(Str),         io:fwrite("~s ~s~n",             [?FUNCTION_SIG, Str])).
   -define(TRACE(FStr,Params), io:fwrite("~s" ++ FStr ++ "~n", [?FUNCTION_SIG] ++ Params)).
 -else.
-  -define(TRACE(_),   void).
-  -define(TRACE(_,_), void).
+  -define(TRACE(_Str),          void).
+  -define(TRACE(_FStr,_Params), void).
 -endif.
