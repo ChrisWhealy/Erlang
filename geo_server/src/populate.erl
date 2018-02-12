@@ -31,7 +31,7 @@ start(Lang) ->
   inets:start(),
 
   TxtFileList = [?FEATURECODE_FILE(Lang), ?TIMEZONE_FILE, ?COUNTRIES_INFO_FILE],
-  Parent   = self(),
+  Parent      = self(),
 
   %% Download each plain file in the file list, then write it to disc
   lists:foreach(fun({F,Ext}) -> spawn(?MODULE, http_get_request, [Parent, F, Ext]) end, TxtFileList),
@@ -50,9 +50,9 @@ start(Lang) ->
   %% The HTTP requests must be batched into sequential groups to avoid looking
   %% like an DoS attack.  The PAR_REQ_LIM macro defines the limit for the number
   %% of parallel HTTP requests
-  Countries      = parse_countries_file(),
-  BatchSize      = bump(length(Countries) / ?PAR_REQ_LIM),
-  CountryBatches = chop(Countries, BatchSize),
+  {ok, Countries} = parse_countries_file(),
+  BatchSize       = bump(length(Countries) / ?PAR_REQ_LIM),
+  CountryBatches  = chop(Countries, BatchSize),
 
   fetch_countries(Parent, CountryBatches),
   wait_for_zip_resources(length(Countries)).
@@ -68,7 +68,7 @@ start(Lang) ->
 wait_for_text_resources(0) -> done;
 
 wait_for_text_resources(Count) ->
-%  ?TRACE("Waiting for ~w resources",[Count]),
+  io:format("Waiting for ~w resources~n",[Count]),
 
   receive
     {ok, Filename, Ext, Body} ->
@@ -86,7 +86,7 @@ wait_for_text_resources(Count) ->
 wait_for_zip_resources(0) -> done;
 
 wait_for_zip_resources(Count) ->
-  ?TRACE("Waiting for ~w resources",[Count]),
+  io:format("Waiting for ~w resources~n",[Count]),
 
   receive
     {ok, Filename, Ext, Body} ->
@@ -127,7 +127,7 @@ handle_zip_file(Dir, File, Body) ->
 
   file:write_file(ZipFile, Body),
 
-  ?TRACE("Unzipping ~s",[ZipFile]),
+  io:format("Unzipping ~s~n",[ZipFile]),
   {ok, [TxtFile]} = zip:unzip(ZipFile, [{file_list, [File ++ ".txt"]}, {cwd, Dir}]),
 
   ok = file:delete(ZipFile).
@@ -137,7 +137,7 @@ handle_zip_file(Dir, File, Body) ->
 %% -----------------------------------------------------------------------------  
 http_get_request(CallerPid, Filename, Extension) ->
   Url = ?GEONAMES_URL ++ Filename ++ Extension,
-%  ?TRACE("~s", [Url]),
+  ?TRACE("~s", [Url]),
 
   Response = httpc:request(get, {Url, []}, [], []),
     
@@ -152,32 +152,25 @@ http_get_request(CallerPid, Filename, Extension) ->
 %% -----------------------------------------------------------------------------
 %% Read the countryInfo.txt file and fetch each individual country file
 parse_countries_file() ->
-  ?TRACE(""),
-
-  % Generate a list of country codes
   {Filename, Ext} = ?COUNTRIES_INFO_FILE,
-
-  case file:open(?TARGET_DIR ++ Filename ++ Ext, [read]) of
-    {ok, IoDevice}  -> read_countries_file(IoDevice, []);
-    {error, Reason} ->
-      io:format("Unable to read ~s.~s. ~s~n",[Filename, Ext, Reason]),
-      []
-  end.
+  parse_countries_file(file:open(?TARGET_DIR ++ Filename ++ Ext, [read])).
+  
+% Generate a list of country codes
+parse_countries_file({ok, IoDevice})  -> {ok, read_countries_file(IoDevice, [])};
+parse_countries_file({error, Reason}) -> {error, Reason}.
 
 %% -----------------------------------------------------------------------------
 %% Read a text file skipping any lines that start with a hash character
-read_countries_file(IoDevice, L) ->
-  case io:get_line(IoDevice,"") of
-    eof ->
-      file:close(IoDevice),
-      L;
+read_countries_file(IoDevice, L) -> read_countries_file(IoDevice, io:get_line(IoDevice,""), L).
 
-    DataLine ->
-      LineTokens = string:tokens(DataLine,"\t"),
-      [[Char1 | _] | _] = LineTokens,
-      
-      read_countries_file(IoDevice, get_country_code(Char1, LineTokens, L))
-  end.
+read_countries_file(IoDevice, eof, L) ->
+  file:close(IoDevice),
+  L;
+
+read_countries_file(IoDevice, DataLine, L) ->
+  LineTokens = string:tokens(DataLine,"\t"),
+  [[Char1 | _] | _] = LineTokens,
+  read_countries_file(IoDevice, io:get_line(IoDevice,""), get_country_code(Char1, LineTokens, L)).
 
 get_country_code($#, _,                     L) -> L;
 get_country_code(_,  [CountryCode | _Rest], L) -> L ++ [CountryCode].
@@ -185,29 +178,25 @@ get_country_code(_,  [CountryCode | _Rest], L) -> L ++ [CountryCode].
 
 %% -----------------------------------------------------------------------------
 %% Bump a float up to the next integer unless it is n.0
-bump(F) ->
-  I = trunc(F),
+bump(F) -> bump(F,trunc(F)).
 
-  case F == I of
-    true  -> I;
-    false -> I + 1
-  end.
+bump(F,I) when F == I -> I;
+bump(_,I)             -> I + 1.
 
 %% -----------------------------------------------------------------------------
 %% Chop up a list into sublists of a given size
-chop(L, BatchSize) ->
-  % Avoid crashing on something as trivial as trying to take N items from a list
-  % of length M where N > M
-  case BatchSize >= length(L) of
-    true  -> [L];
-    false ->
-      {H,T} = lists:split(BatchSize, L),
-      chop(T, BatchSize, length(T), [H])
-  end.
+chop(L, BatchSize) -> chop(L, BatchSize, length(L)).
+
+% Avoid crashing on something as trivial as trying to take N items from a list
+% of length M where N > M
+chop(L, BatchSize, Len) when BatchSize >= Len -> [L];
+chop(L, BatchSize, _) ->
+  {H,T} = lists:split(BatchSize, L),
+  chop(T, BatchSize, length(T), [H]).
 
 chop([], _, _, Acc) -> Acc;
 
-chop(L, BatchSize, N, Acc) when BatchSize =< N ->
+chop(L, BatchSize, Len, Acc) when BatchSize =< Len ->
   {H,T} = lists:split(BatchSize, L),
   chop(T, BatchSize, length(T), Acc ++ [H]);
 
